@@ -1,0 +1,91 @@
+<%include partials/header.ejs %>
+<div class="table-wrapper">
+  <% if (veges.length > 0) {%>
+  <table class="table table-hovered">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Item Name</th>
+        <th scope="col">Type</th>
+        <th scope="col">Total quantity</th>
+        <th scope="col">Price</th>
+        <th scope="col">Add to Cart</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% veges.forEach((vege,index)=>{ %>
+      <tr>
+        <td id="<%=vege.id%>"><%=vege.id%></td>
+        <td><%=vege.name%></td>
+        <td><%=vege.type%></td>
+        <td><%=vege.quantity%></td>
+        <td><%=vege.price%></td>
+        <td>
+          <label
+            ><input
+              type="checkbox"
+              class="checkbox"
+              id="<%=vege.name%>"
+              onclick="ask_qunatity()"
+            />
+            Add</label
+          >
+        </td>
+      </tr>
+      <%})%>
+    </tbody>
+  </table>
+  <button type="button" class="btn btn-success form-control" onclick="print()">
+    Submit
+  </button>
+  <%} else { %>
+  <p>No Items Updated For Today yet.</p>
+  <%}%>
+</div>
+
+<script>
+  var unique;
+  let arr = [];
+  var id;
+  let quan = new Array();
+  $(document).ready(function() {
+    $('input[type="checkbox"]').click(function() {
+      if ($(this).prop("checked") == true) {
+        $("input:checkbox").each(function() {
+          var $this = $(this);
+          if ($this.is(":checked")) {
+            arr.push($this.attr("id"));
+          }
+        });
+      } else if ($(this).prop("checked") == false) {
+        $("input:checkbox").each(function() {
+          var $this = $(this);
+          arr.pop($this.attr("id"));
+        });
+      }
+      function onlyUnique(value, index, self) {
+        return self.indexOf(value) === index;
+      }
+
+      // usage example:
+      unique = arr.filter(onlyUnique);
+      unique = JSON.stringify(unique);
+      console.log(unique);
+    });
+  });
+  function sendreq() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "http://localhost:5000/cart");
+    xhr.setRequestHeader("Content-type", "application/json; charset=utf-8");
+    xhr.send(unique);
+  }
+  function ask_qunatity() {
+    let req_quantity = window.prompt("Enter Quantity Required", 0);
+    quan.push(req_quantity);
+    quan = JSON.stringify(quan);
+  }
+
+  function print() {
+    console.log(unique, quan);
+  }
+</script>
