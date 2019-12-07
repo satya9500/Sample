@@ -22,12 +22,7 @@
         <td><%=vege.price%></td>
         <td>
           <label
-            ><input
-              type="checkbox"
-              class="checkbox"
-              id="<%=vege.name%>"
-              onclick="ask_qunatity()"
-            />
+            ><input type="checkbox" class="checkbox" id="<%=vege.name%>" />
             Add</label
           >
         </td>
@@ -35,7 +30,11 @@
       <%})%>
     </tbody>
   </table>
-  <button type="button" class="btn btn-success form-control" onclick="print()">
+  <button
+    type="button"
+    class="btn btn-success form-control"
+    onclick="sendreq()"
+  >
     Submit
   </button>
   <%} else { %>
@@ -45,47 +44,48 @@
 
 <script>
   var unique;
-  let arr = [];
+  let arr = {};
   var id;
-  let quan = new Array();
+  let quan = [];
+  let i;
   $(document).ready(function() {
     $('input[type="checkbox"]').click(function() {
       if ($(this).prop("checked") == true) {
-        $("input:checkbox").each(function() {
-          var $this = $(this);
-          if ($this.is(":checked")) {
-            arr.push($this.attr("id"));
-          }
-        });
-      } else if ($(this).prop("checked") == false) {
-        $("input:checkbox").each(function() {
-          var $this = $(this);
-          arr.pop($this.attr("id"));
-        });
-      }
-      function onlyUnique(value, index, self) {
-        return self.indexOf(value) === index;
-      }
+        let i = $(this).attr("id");
+        arr[i] = ask_qunatity();
+        //console.log(arr);
 
-      // usage example:
-      unique = arr.filter(onlyUnique);
-      unique = JSON.stringify(unique);
-      console.log(unique);
+        // var $this = $(this);
+        // if ($this.is(":checked")) {
+        //   arr.push($this.attr("id"));
+        // }
+      } // else if ($(this).prop("checked") == false) {
+      //   var $this = $(this);
+      //   arr.pop($this.attr("id"));
+      // }
+      // function onlyUnique(value, index, self) {
+      //   return self.indexOf(value) === index;
+      // }
+
+      // // usage example:
+      // unique = arr.filter(onlyUnique);
+      // unique = JSON.stringify(unique);
+      // console.log(unique);
+
+      function ask_qunatity() {
+        let req_quantity;
+        req_quantity = window.prompt("Enter Quantity Required", 0);
+        return req_quantity;
+      }
     });
   });
   function sendreq() {
+    let json_array = JSON.stringify(arr);
+    console.log(json_array);
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "http://localhost:5000/cart");
     xhr.setRequestHeader("Content-type", "application/json; charset=utf-8");
-    xhr.send(unique);
-  }
-  function ask_qunatity() {
-    let req_quantity = window.prompt("Enter Quantity Required", 0);
-    quan.push(req_quantity);
-    quan = JSON.stringify(quan);
-  }
-
-  function print() {
-    console.log(unique, quan);
+    xhr.send(json_array);
+    setTimeout(2000, (window.location.href = "http://localhost:5000/cart"));
   }
 </script>

@@ -1,0 +1,48 @@
+<%include partials/header.ejs %>
+<div class="table-wrapper">
+  <center><h1>Your Cart</h1></center>
+  <% if (cart.length > 0) {%>
+  <table class="table table-hovered">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Item Name</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Predicted Quantity</th>
+        <th scope="col">Actual Price</th>
+        <th scope="col">Total Price</th>
+        <th scope="col">Predicted Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% cart.forEach((item,index)=>{ %>
+      <tr>
+        <td id="<%=item.id%>"><%=item.id%></td>
+        <td><%=item.name%></td>
+        <td><%=item.quantity_b%></td>
+        <td><%=predict%></td>
+        <td><%=item.price%></td>
+        <td><%=item.price * item.quantity_b%></td>
+        <td><%=item.price * predict%></td>
+      </tr>
+      <%})%>
+    </tbody>
+  </table>
+  <button type="button" class="btn btn-success form-control">
+    Submit
+  </button>
+  <%} else { %>
+  <p>Cart Empty!</p>
+  <%}%>
+</div>
+
+<script>
+  function sendreq() {
+    let json_array = JSON.stringify(arr);
+    console.log(json_array);
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "http://localhost:5000/cart");
+    xhr.setRequestHeader("Content-type", "application/json; charset=utf-8");
+    xhr.send(json_array);
+  }
+</script>

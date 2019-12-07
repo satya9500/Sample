@@ -35,12 +35,26 @@
     }
   </style>
 
-  <body>
+  <body onload="load_page()">
     <div class="page-wrapper">
       <nav class="navbar navbar-light bg-light">
         <span class="navbar-brand mb-0 h1"><a href="/">Mandi List</a></span>
         <span class="navbar-brand mb-0 h1"><a href="/add">Seller Side</a></span>
       </nav>
     </div>
+    <script>
+      //this method is simialr to first js method above
+      //Jquery initialize
+      $(document).ready(function() {
+        //Check if the current URL contains '# or hash'
+        if (document.URL.indexOf("#") == -1) {
+          // Set the URL to whatever it was plus "#loaded".
+          url = document.URL + "#loaded";
+          location = "#loaded";
+          //Reload the page using reload() method
+          location.reload(true);
+        }
+      });
+    </script>
   </body>
 </html>
