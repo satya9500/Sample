@@ -20,17 +20,20 @@
         <td id="<%=item.id%>"><%=item.id%></td>
         <td><%=item.name%></td>
         <td><%=item.quantity_b%></td>
-        <td><%=predict%></td>
+        <td><%=predict[index]%></td>
         <td><%=item.price%></td>
         <td><%=item.price * item.quantity_b%></td>
-        <td><%=item.price * predict%></td>
+        <td><%=item.price * predict[index]%></td>
       </tr>
       <%})%>
     </tbody>
   </table>
   <button type="button" class="btn btn-success form-control">
-    Submit
-  </button>
+    Submit</button
+  ><br />
+  <a href="http://localhost:5000/deliver" class="btn btn-primary form-control">
+    Deliver Fresh
+  </a>
   <%} else { %>
   <p>Cart Empty!</p>
   <%}%>
