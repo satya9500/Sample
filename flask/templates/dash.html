@@ -1,0 +1,60 @@
+<html lang="en">
+
+    <head>
+      <meta charset="UTF-8" />
+      <title>{{title}}</title>
+      <link href='https://luengo-font.s3.amazonaws.com/fonts.css' rel='stylesheet' type='text/css'>
+    </head>
+    <style>
+        * {
+  box-sizing: border-box;
+}
+.card {
+  overflow: hidden;
+  
+  top: 0;
+  left: 0;
+  right: 0;
+  margin-top: 3%;
+  margin-left: 20%;
+  margin-right: 10%;
+  margin-bottom: 3%;
+  height:  30%;
+  width: 60%;
+  border-style: solid;
+  border-width: 10px;
+  border-color: white;
+  border-radius: 50px;
+  background-color: rgb(5, 183, 196);
+}
+body{
+  background-color: transparent;
+  font-family: 'Luengo-Bold', sans-serif;
+}
+.noselect {
+  -webkit-touch-callout: none; 
+  -webkit-user-select: none;   
+  -khtml-user-select: none;    
+  -moz-user-select: none;      
+  -ms-user-select: none;       
+  user-select: none;           
+}
+
+iframe{
+  width: 1000%;
+  height: 100%;
+}
+    </style>
+    
+    <body>
+      
+        <h1 style="margin-top:5%;text-align: center;">TIPS FOR PRESERVATION TECHNIQUES</h1>
+       {% for k,v in para.items() %}
+        <div class='card'>
+        <h2 style="text-align: center;background-color: lightyellow;margin-top: 3%;">{{k}}</h2>
+         <P style="margin:5%;">{{v}}</P>
+      </div>
+      {%endfor%}
+    </body>
+    
+    </html>

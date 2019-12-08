@@ -69,6 +69,12 @@ router.post("/cart", async (req, res, next) => {
   //   });
   // }
 });
+
+router.post("/predict", async (req, res, next) => {
+  console.log(req.body.name);
+  console.log("reached predict");
+});
+
 predict = [];
 obj = {};
 router.get("/cart", async (req, res, next) => {
@@ -85,7 +91,7 @@ router.get("/cart", async (req, res, next) => {
 
       var xhr = new XMLHttpRequest();
 
-      xhr.open("POST", "https://e7bdf8cf.ngrok.io/predict");
+      xhr.open("POST", "https://f641f956.ngrok.io/predict");
       xhr.setRequestHeader("Content-Type", "application/json");
       xhr.setRequestHeader("Accept", "*/*");
       xhr.setRequestHeader("Cache-Control", "no-cache");
@@ -134,6 +140,10 @@ router.get("/web", async (req, res, next) => {
   });
 });
 
+router.get("/survey", async (req, res, next) => {
+  res.render("survey.ejs", { title: "Survey" });
+});
+
 router.get("/deliver", async (req, res, next) => {
   let query = "select * from info";
   db.query(query, async (err, res) => {
@@ -156,13 +166,12 @@ router.get("/deliver", async (req, res, next) => {
         quantity5=${res[5].quantity_b}&&
         quantity6=${res[6].quantity_b}
         `;
-
       xhr.open("GET", url);
-      xhr.send();
+      await xhr.send();
     }
   });
 
-  res.send("blank.ejs");
+  res.render("blank.ejs", { title: "Delivery" });
 });
 
 module.exports = router;
